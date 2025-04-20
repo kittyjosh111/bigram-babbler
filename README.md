@@ -16,4 +16,4 @@ The generator function has caching included, so it should kind of help the progr
 
 Inspired by lab 10 / app 2 for STAT 133, and using DATA 8's datascience package as well as CS61A's lectures on recursion.
 
-![Flowchart of the processes](/screenshots/diagram.png)
+![Flowchart of the processes](https://raw.githubusercontent.com/kittyjosh111/bigram-babbler/refs/heads/main/screenshot/diagram.png)
