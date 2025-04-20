@@ -15,3 +15,5 @@ A sample usage is to do the following:
 The generator function has caching included, so it should kind of help the program run faster.
 
 Inspired by lab 10 / app 2 for STAT 133, and using DATA 8's datascience package as well as CS61A's lectures on recursion.
+
+![Flowchart of the processes](/screenshots/diagram.png)
