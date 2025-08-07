@@ -1,5 +1,5 @@
 # First tokenize, then generate bigrams, then count / get proportions per start word
-from datascience import *
+from datascience import Table, make_array
 import re
 import numpy as np
 import random
