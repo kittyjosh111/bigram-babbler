@@ -72,6 +72,7 @@ def make_sentences(word_list):
 def generate(word, found_bigram_table, n, word_list=False, cache=False):
   """Function that takes in a word, then looks at a table of sorted bigrams, and generates a next word.
   Continues N times recursively"""
+  word = word.lower() #since our bigram stuff used all lowercase, do the same
   if word_list == False:
     word_list = [] #should be false by default
   if cache == False:
@@ -87,7 +88,11 @@ def generate(word, found_bigram_table, n, word_list=False, cache=False):
     else:
       bigram_table = bigram_count(word, found_bigram_table)
       cache[word] = bigram_table #and then just save it to cache
-    rng_int = random.randint(1, sum(bigram_table.column("count")))
+    total_counts = sum(bigram_table.column("count"))
+    if total_counts <= 0:
+      print(f"[ERROR]: bigrams could not be generated for the word: {word}")
+      return word_list
+    rng_int = random.randint(1, total_counts)
     for i_row in range(bigram_table.num_rows):  #ok i bet theres a better algo for this, but whatev
       rng_min = int(bigram_table.row(i_row)[2])
       rng_max = int(bigram_table.row(i_row)[3])
