@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <script>
+    async function send_to_python() {
+      const starting_word = document.getElementById('starting_word').value;
+      const gen_length = document.getElementById('gen_length').value;
+      const return_output = document.getElementById('return_output');
+      const button = document.getElementById('button');
+      return_output.innerText = 'Generating...';
+      button.style.display = 'none';
+
+      const response = await fetch('/bigram_babble', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ word: starting_word, length: gen_length })
+      });
+
+      const data = await response.json();
+      return_output.innerText = data.result;
+      button.style.display = '';
+    }
+  </script>
+  <h1>Bigram Babbler</h1>
+  <label>Starting Word: </label>
+  <input type="text" id="starting_word" required>
+  <br><br>
+  <label>Length of output: </label>
+  <input type="number" id="gen_length" min="1" value="10">
+  <button id="button" onclick="send_to_python()">Generate</button>
+  <p><strong>Generated output:</strong></p>
+  <code id="return_output"></code>
+</body>
+</html>
