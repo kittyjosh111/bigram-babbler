@@ -3,7 +3,6 @@ from datascience import *
 import re
 import numpy as np
 import random
-global_debug = False
 
 ## Sample usage:
 ## b = find_bigrams(tokenize("1984.txt"))
@@ -20,7 +19,7 @@ def tokenize(filename):
   tokens = not_tokenized.split() #split by word
   return np.array(tokens) #store them all into an array
 
-def find_bigrams(token_array):
+def find_bigrams(token_array, debug=False):
   """Function to find / make bigrams given an array of tokens TOKEN_ARRAY.
   Returns a table with cols 'Word 1' and 'Word 2'"""
   word1_list = [] #bigrams are goupings of two words. So we want a word 1...
@@ -34,7 +33,7 @@ def find_bigrams(token_array):
     "Word 1", np.array(word1_list),
     "Word 2", np.array(word2_list) #tables are easier to work with
   )
-  if global_debug:
+  if debug:
     print(f"[DEBUG]: find_bigrams output:\n{bigram_table}")
   return bigram_table
 
@@ -69,7 +68,7 @@ def make_sentences(word_list):
   sentence_out = sentence_out[:-1] + "." #remove last space, replace with period
   return sentence_out
 
-def generate(word, found_bigram_table, n, word_list=False, cache=False):
+def generate(word, found_bigram_table, n, word_list=False, cache=False, debug=False):
   """Function that takes in a word, then looks at a table of sorted bigrams, and generates a next word.
   Continues N times recursively"""
   word = word.lower() #since our bigram stuff used all lowercase, do the same
@@ -82,7 +81,7 @@ def generate(word, found_bigram_table, n, word_list=False, cache=False):
   else: #take the recursive leap of faith!
     word_list.append(word) #so we can print it all in the end
     if word in cache: #check if we saved the computation
-      if global_debug:
+      if debug:
         print(f"[DEBUG]: cache for '{word}' found in generate(). Skipping bigram_count call...")
       bigram_table = cache[word]
     else:
@@ -97,7 +96,7 @@ def generate(word, found_bigram_table, n, word_list=False, cache=False):
       rng_min = int(bigram_table.row(i_row)[2])
       rng_max = int(bigram_table.row(i_row)[3])
       if rng_int >= rng_min and rng_int <= rng_max:
-        if global_debug:
+        if debug:
           print(f"[DEBUG]: generate output. Word 1 is {word}. (runs remaining: {n}):\n{bigram_table}\nRNG number is {rng_int}.\n\n")
         new_word = bigram_table.row(i_row)[0] #get the word corresponding to the rng
-        return generate(new_word, found_bigram_table, n-1, word_list, cache)
+        return generate(new_word, found_bigram_table, n-1, word_list, cache, debug)

@@ -6,13 +6,13 @@ For each word generated, all bigrams whose first word matches the selected word 
 
 A sample usage is to do the following:
 
-- ```global_debug = True```: turns debug messages on.
+- ```b = find_bigrams(tokenize("1984.txt"), debug=True)```: selects the local file "1984.txt" to tokenize and generate bigrams for.
 
-- ```b = find_bigrams(tokenize("1984.txt"))```: selects the local file "1984.txt" to tokenize and generate bigrams for.
-
-- ```generate("brother", b, 50)```: generate 50 words, starting from the word "brother". First argument is the beginning word, second argument is how many times to run the generator.
+- ```generate("brother", b, 50, debug=True)```: generate 50 words, starting from the word "brother". First argument is the beginning word, second argument is how many times to run the generator.
 
 The generator function has caching included, so it should kind of help the program run faster.
+
+If you don't want to have debug messages, don't supply the debug argument as shown above. It defaults to False, so debug messages won't be printed unless you specifically set the argument to True.
 
 Inspired by lab 10 / app 2 for STAT 133, and using DATA 8's datascience package as well as CS61A's lectures on recursion.
 
